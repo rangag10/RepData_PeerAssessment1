@@ -1,15 +1,22 @@
-# Reproducible Research: Peer Assessment 1
+Reproducible Research: Peer Assessment 1
+========================================================
+
+## Pull the data file from source URL
+``` {r, echo=TRUE}
+setInternet2(use = TRUE)
+sourceURL <- "https://d396qusza40orc.cloudfront.net/repdata%2Fdata%2Factivity.zip"
+download.file(sourceURL, "ActivityMonitoring.zip", mode="wb")
+```
 
 
 ## Loading and preprocessing the data
 The file is unzipped, and loaded into a data frame.  The date column is converted to a 'Date' data type.
 ```{r, echo=TRUE, cache=TRUE}
-unzip("activity.zip")
+unzip("ActivityMonitoring.zip")
 inDF <- read.csv("activity.csv", header=TRUE, colClasses=c("numeric","character",  
                                                            "numeric"))
 inDF[,2] <- as.Date(inDF[,2], format="%Y-%m-%d")
 ```
-
 
 ## What is mean total number of steps taken per day?
 ```{r, echo=TRUE}
@@ -31,8 +38,8 @@ colnames(dailyAvgDF) <- c("interval", "avgSteps")
 plot(dailyAvgDF[,1], dailyAvgDF[,2],type="l", main="Average Daily Activity Pattern", xlab="Intervals", ylab="Avg. # of Steps Taken")
 maxVals <- subset(dailyAvgDF, avgSteps==max(avgSteps))
 ```
-The interval that contains the maximum number of steps, on average across all the days in the dataset is `r maxVals[1,1]` and the maximum number of steps pertaining to this interval is `r maxVals[1,2]`
 
+The interval that contains the maximum number of steps, on average across all the days in the dataset is `r maxVals[1,1]` and the maximum number of steps pertaining to this interval is `r maxVals[1,2]`
 
 ## Imputing missing values
 The number of rows with NA is calculated as follows:
@@ -87,3 +94,6 @@ plot(weekendAvgDF[,1], weekendAvgDF[,2],type="l", main="Weekend Activity Pattern
 plot(weekdayAvgDF[,1], weekdayAvgDF[,2],type="l", main="Weekday Activity Pattern",
      xlab="Interval", ylab="Avg. # of Steps")
 ```
+
+
+
